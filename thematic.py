@@ -33,37 +33,43 @@ THEMATIC CARTO TOOLS
 Is a CSV, SHP, and OGR based Python tools for querrying a data source and drawing 
 thematic cartographic representations.""")
 
+defaults = dict(measurement='quantitative', name_field='name', legend_type='tell-me',
+                num_breaks=5, colors='YlGnBu', color_space='ColorBrewer',
+                outfiles=['stylesheet.mss', 'style.mml', 'legend.html'])
+
+optparser.set_defaults(**defaults)
+
 optparser.add_option('-s', '--in_file','--data_file', dest='infilename',
                       help='Give me your huddled masses of geodata!')
 
-optparser.add_option('-o', '--out_files', dest='outfiles', action='append', nargs=3, default=['stylesheet.mss', 'style.mml', 'legend.html'],
+optparser.add_option('-o', '--out_files', dest='outfiles', action='append', nargs=3,
                       help='Style name for resulting MSS, MML, and HTML files.')
 
 optparser.add_option('-i', '--indicator', '--field-name', dest='field_name', 
                       help='Data is in which column.')
 
-optparser.add_option('-m', '--measurement', dest='measurement', default='quantitative',
+optparser.add_option('-m', '--measurement', dest='measurement',
                       help='quantitative or qualitative.')
 
-optparser.add_option('--name-field', dest='name_field', default='name',
-                      help='Optional name of column for labels to name themselves. Default value is "name".')
+optparser.add_option('--name-field', dest='name_field',
+                      help='Optional name of column for labels to name themselves. Default value is "%(name_field)s".' % defaults)
 
 optparser.add_option('--filter-field', dest='filter_field', action='append', nargs=2,
                       help='Field to use for limiting selection by theme and the value to limit by. Default is no filter. Useful if more than one enumeration unit type is present in master data file (eg: mixed ZIPs and Counties).')
 
-optparser.add_option('-l', '--legend-type', dest='legend_type', default='tell-me',
+optparser.add_option('-l', '--legend-type', dest='legend_type',
                       help='Valid types are: tell-me (tk), single-symbol, unique-value, bins, continuous-color, and graduated-symbol.')
 
 optparser.add_option('-c', '--classification-type', dest='class_type', 
                       help='Valid types are: quantiles, tk tk tk.')
 
-optparser.add_option('-n', '--number-breaks', dest='num_breaks', default=5, type='int',
-                      help='Number of data breaks. single-symbol=1 by default.')
+optparser.add_option('-n', '--number-breaks', dest='num_breaks', type='int',
+                      help='Number of data breaks. Default value is %(num_breaks)s.' % defaults)
 
-optparser.add_option('-r', '--colors', dest='colors', default='YlGnBu',
+optparser.add_option('-r', '--colors', dest='colors',
                       help='Named color series from ColorBrewer.org or other--color-space (done), or comma-separated-values for specific #aabbcc; hex values (tk)')
 
-optparser.add_option('--color-space', dest='color-space', default='ColorBrewer',
+optparser.add_option('--color-space', dest='color_space',
                       help='ColorBrewer, Hex (tk), Kuler (tk)')
 
 
